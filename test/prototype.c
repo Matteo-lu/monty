@@ -1,36 +1,18 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <string.h>
+#include "header.h"
 
-typedef struct stack_s
+int _value;
+
+int main(/*int ac, char **av*/)
 {
-        int n;
-        struct stack_s *prev;
-        struct stack_s *next;
-} stack_t;
-
-typedef struct instruction_s
-{
-        char *opcode;
-        void (*f)(stack_t **stack, unsigned int line_number);
-} instruction_t;
-
-char **buff_separator(char *str, char *identificator);
-void (*get_func(char *s))(stack_t **stack, unsigned int line_number);
-void push(stack_t **stack, unsigned int line_number);
-void pop(stack_t **stack, unsigned int line_number);
-void pall(stack_t **stack, unsigned int line_number);
-
-int main(int ac, char **av)
-{
-	int fd, size, i = 0, letters = 1024;
+	int ac = 2;
+	char *av[2];
+	int fd, size, letters = 1024;
 	char *buffer = NULL, **array_lines = NULL, **array_spaces = NULL;
-	unsigned int number_lines = 0;
-	stack_t **stack;
+	unsigned int number_lines = 0, i = 0, j = 0;
+	stack_t *stack = NULL;
 
+	av[0] = "./monty";
+	av[1] = "bytecodes/00.m";
 	buffer = malloc(letters * sizeof(char));
 	if(buffer == NULL)
 	{
@@ -49,12 +31,22 @@ int main(int ac, char **av)
 	array_lines = buff_separator(buffer, "\n");
 	while (array_lines[i] != NULL)
 	{
+		j = 0;
 		array_spaces = buff_separator(array_lines[i], " "); /* check memory */
-		printf("linea numero: %d\n", i + 1);
-		get_func(array_spaces[0]);
+		while (array_spaces[j] != NULL)
+		{
+			j++;
+		}
+		if (j == 2)
+		{	
+			_value = atoi(array_spaces[1]);
+		}
+		printf("numero de palabras: %d\n", j);
+		get_func(array_spaces[0], &stack, (i + 1));
 		free(array_spaces);
 		i++;
 	}
+	free_stack(&stack);
 	free(buffer);
 	free(array_lines);
 	return (0);
@@ -94,7 +86,7 @@ char **buff_separator(char *str, char *identificator)
 	return (array_words);
 }
 
-void (*get_func(char *s))(stack_t **stack, unsigned int line_number)
+void get_func(char *s, stack_t **stack, unsigned int line_number)
 {
 	instruction_t ops[] = {
 		{"push", push},
@@ -108,7 +100,7 @@ void (*get_func(char *s))(stack_t **stack, unsigned int line_number)
 	{
 		if (strncmp(s, ops[i].opcode, strlen(ops[i].opcode)) == 0)
 		{
-			printf("Entramos papá\n");
+			ops[i].f(stack, line_number);
 		}
 		i++;
 	}
@@ -117,15 +109,63 @@ void (*get_func(char *s))(stack_t **stack, unsigned int line_number)
 
 void push(stack_t **stack, unsigned int line_number)
 {
+	stack_t *new = NULL;
 
+	printf("Ay gonorrea!, entramos\n");
+	new = new_node(_value);
+	if (*stack == NULL)
+	{
+		new->next = *stack;
+		*stack = new;
+		printf("%d pushed to stack\n", new->n);
+	}
+	else
+	{
+		new->next = *stack;
+		(*stack)->prev = new;
+		*stack = new;
+		 printf("%d pushed to stack\n", new->n);
+	}
 }
 
 void pop(stack_t **stack, unsigned int line_number)
 {
-
+	
 }
 
 void pall(stack_t **stack, unsigned int line_number)
 {
+	stack_t *copy = NULL;
 
+	copy = *stack;
+	while (copy != NULL)
+	{
+		printf("valor [%d]: %d\n", line_number, copy->n);
+		copy = copy->next;
+	}
+}
+
+stack_t* new_node(int value)
+{
+	stack_t *new = NULL;
+
+	new = malloc(sizeof(stack_t));
+	new->n = value;
+	new->next = NULL;
+	new->prev = NULL;
+
+	return (new);
+}
+
+void free_stack(stack_t **stack)
+{
+	stack_t *copy;
+
+	copy = *stack;
+	while (copy != NULL)
+	{
+		copy = copy->next;
+		free(*stack);
+		*stack = copy;
+	}
 }
