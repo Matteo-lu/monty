@@ -46,8 +46,10 @@ void pall(stack_t **stack, unsigned int line_number);
 stack_t *new_node(int value);
 void free_stack(stack_t **stack);
 char *_read(char **av);
-void execute_loop(char *array_lines, unsigned int number_lines,
+int execute_loop(char *array_lines, unsigned int number_lines,
 stack_t **stack);
+void free_everything(char *buffer, stack_t **stack, char **array_lines);
+int count_lines(char *buffer);
 
 extern int _value;
 
