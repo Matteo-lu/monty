@@ -35,23 +35,19 @@ int main(int ac, char **av)
 	}
 	size = read(fd, buffer, letters);
 	buffer[size] = '\0';
+	number_lines = count_lines(buffer);
 	array_lines = buff_separator(buffer, "\n");
 	while (array_lines[i] != NULL)
 	{
-		number_lines = i + 1;
 		if (execute_loop(array_lines[i], number_lines, &stack) == -1)
 		{
 			dprintf(STDERR_FILENO, "L%d: usage: push integer\n", number_lines);
-			free_stack(&stack);
-			free(buffer);
-			free(array_lines);
+			free_everything(buffer, &stack, array_lines);
 			exit(EXIT_FAILURE);
 		}
 		i++;
 	}
-	free_stack(&stack);
-	free(buffer);
-	free(array_lines);
+	free_everything(buffer, &stack, array_lines);
 	return (0);
 }
 
@@ -88,4 +84,25 @@ number_lines, stack_t **stack)
 	}
 	free(array_spaces);
 	return (0);
+}
+
+void free_everything(char *buffer, stack_t **stack, char **array_lines)
+{
+	free_stack(stack);
+	free(buffer);
+	free(array_lines);
+}
+
+int count_lines(char *buffer)
+{
+	unsigned int i = 0, count = 0;
+
+	for (i = 0; buffer[i] != '\0'; i++)
+	{
+		if (buffer[i] == '\n')
+		{
+			count++;
+		}
+	}
+	return (count - 1);
 }
