@@ -67,10 +67,10 @@ int get_func(char *s, stack_t **stack, unsigned int line_number)
 		i++;
 	}
 	if (j == 0)
-		{
-			dprintf(STDERR_FILENO, "L%d: unknown instruction %s\n", line_number, s);
-			return (EXIT_FAILURE);
-		}
+	{
+		dprintf(STDERR_FILENO, "L%d: unknown instruction %s\n", line_number, s);
+		return (EXIT_FAILURE);
+	}
 	return (0);
 }
 

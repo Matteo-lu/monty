@@ -25,17 +25,6 @@ void push(stack_t **stack, unsigned int line_number __attribute__((unused)))
 }
 
 /**
- * pop - Function to pop first node
- * @stack: Pointer to top
- * @line_number: current line
- * Return: void
- */
-/*void pop(stack_t **stack, unsigned int line_number)
-{
-
-}
-*/
-/**
  * pall - Function to print stack
  * @stack: Pointer to top
  * @line_number: current line

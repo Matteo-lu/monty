@@ -40,14 +40,6 @@ int main(int ac, char **av)
 	{
 		number_lines = i + 1;
 		execute_loop(array_lines[i], number_lines, &stack);
-		/*j = 0;
-		array_spaces = buff_separator(array_lines[i], " ");
-		while (array_spaces[j] != NULL) j++;
-		if (j == 2) _value = atoi(array_spaces[1]);
-		number_lines = i + 1;
-		get_func(array_spaces[0], &stack, number_lines);
-		free(array_spaces);
-		i++;*/
 		i++;
 	}
 	free_stack(&stack);
@@ -56,10 +48,18 @@ int main(int ac, char **av)
 	return (0);
 }
 
-void execute_loop(char *array_lines, unsigned int number_lines, stack_t **stack)
+/**
+ * execute_loop - Execution loop
+ * @array_lines: pointer to arguments
+ * @number_lines: current line
+ * @stack: pointer to top
+ * Return: 0 if success or -1 if fail
+ */
+void execute_loop(char *array_lines, unsigned int
+number_lines, stack_t **stack)
 {
 	unsigned int j = 0;
-	char ** array_spaces = NULL;
+	char **array_spaces = NULL;
 
 	array_spaces = buff_separator(array_lines, " ");
 	while (array_spaces[j] != NULL)
