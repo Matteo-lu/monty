@@ -62,7 +62,7 @@ number_lines, stack_t **stack)
 	char **array_spaces = NULL;
 
 	array_spaces = buff_separator(array_lines, " ");
-	while (array_spaces[j] != NULL)
+	while (array_spaces[j] && j < 2)
 	{
 		j++;
 	}
@@ -70,6 +70,9 @@ number_lines, stack_t **stack)
 	{
 		_value = atoi(array_spaces[1]);
 	}
-	get_func(array_spaces[0], stack, number_lines);
+	if (j != 0)
+	{
+		get_func(array_spaces[0], stack, number_lines);
+	}
 	free(array_spaces);
 }

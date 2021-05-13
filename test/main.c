@@ -66,9 +66,15 @@ number_lines, stack_t **stack)
 	{
 		j++;
 	}
+	printf("valor de j %d\n", j);
 	if (j == 2)
 	{
 		_value = atoi(array_spaces[1]);
+	}
+	else
+	{
+		dprintf(STDERR_FILENO, "USAGE: monty file\n");
+		return (EXIT_FAILURE);
 	}
 	get_func(array_spaces[0], stack, number_lines);
 	free(array_spaces);
