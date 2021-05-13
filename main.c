@@ -18,20 +18,20 @@ int main(int ac, char **av)
 	if (ac != 2)
 	{
 		dprintf(STDERR_FILENO, "USAGE: monty file\n");
-		return (EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
 	buffer = malloc(letters * sizeof(char));
 	if (buffer == NULL)
 	{
 		dprintf(STDERR_FILENO, "Error: malloc failed\n");
-		return (EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't open file %s\n", av[1]);
 		free(buffer);
-		return (EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
 	size = read(fd, buffer, letters);
 	buffer[size] = '\0';
@@ -39,7 +39,14 @@ int main(int ac, char **av)
 	while (array_lines[i] != NULL)
 	{
 		number_lines = i + 1;
-		execute_loop(array_lines[i], number_lines, &stack);
+		if (execute_loop(array_lines[i], number_lines, &stack) == -1)
+		{
+			dprintf(STDERR_FILENO, "L%d: usage: push integer\n", number_lines);
+			free_stack(&stack);
+			free(buffer);
+			free(array_lines);
+			exit(EXIT_FAILURE);
+		}
 		i++;
 	}
 	free_stack(&stack);
@@ -55,7 +62,7 @@ int main(int ac, char **av)
  * @stack: pointer to top
  * Return: 0 if success or -1 if fail
  */
-void execute_loop(char *array_lines, unsigned int
+int execute_loop(char *array_lines, unsigned int
 number_lines, stack_t **stack)
 {
 	unsigned int j = 0;
@@ -69,10 +76,16 @@ number_lines, stack_t **stack)
 	if (j == 2)
 	{
 		_value = atoi(array_spaces[1]);
+		if (_value == 0 && strcmp(array_spaces[1], "0") != 0)
+		{
+			free(array_spaces);
+			return (-1);
+		}
 	}
 	if (j != 0)
 	{
 		get_func(array_spaces[0], stack, number_lines);
 	}
 	free(array_spaces);
+	return (0);
 }
