@@ -11,7 +11,7 @@ int _value;
 int main(int ac, char **av)
 {
 	char *buffer = NULL, **token = NULL;
-	unsigned int number_lines = 0, i = 0;
+	unsigned int number_lines = 0;
 	stack_t *stack = NULL;
 	size_t size  = 0;
 	FILE *fp = fopen(av[1], "r");
