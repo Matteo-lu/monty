@@ -83,9 +83,7 @@ number_lines, stack_t **stack)
 				i++;
 			}
 			if (r == i)
-			{
 				_value = atoi(array_lines[1]);
-			}
 			else
 			{
 				free(array_lines);
@@ -93,7 +91,10 @@ number_lines, stack_t **stack)
 			}
 		}
 	}
-	get_func(array_lines[0], stack, number_lines);
+	if (strcmp(array_lines[0], "push") == 0 && j != 2)
+		return (-1);
+	if (j != 0)
+		get_func(array_lines[0], stack, number_lines);
 	free(array_lines);
 	return (0);
 }
