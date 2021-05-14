@@ -31,3 +31,34 @@ void mod(stack_t **stack, unsigned int line_number)
 	(*stack)->prev = NULL;
 	free(copy);
 }
+
+/**
+ * pchar -  prints the char at the top of the stack, followed by a new line
+ * @stack: Pointer to top of the stack
+ * @line_number: Instruction line number
+ * Return: void
+ */
+void pchar(stack_t **stack, unsigned int line_number)
+{
+	stack_t *copy = NULL;
+	int count = 0;
+
+	if (*stack == NULL)
+	{
+		dprintf(STDERR_FILENO, "L%d: can't pchar, stack empty\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+	copy = *stack;
+	count = copy->n;
+	if (count >= 1 && count <= 126)
+	{
+		putchar(count);
+		putchar('\n');
+	}
+	else
+	{
+		dprintf(STDERR_FILENO, "L%d: can't pchar, value out of range\n",
+		line_number);
+		exit(EXIT_FAILURE);
+	}
+}
