@@ -74,7 +74,7 @@ number_lines, stack_t **stack)
 					i = 0;
 					r++;
 				}
-				while (k >= 48 && k <= 56)
+				while (k >= 48 && k <= 57)
 				{
 					if (array_lines[1][i] == k)
 						r++;
