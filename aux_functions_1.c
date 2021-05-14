@@ -67,6 +67,11 @@ void get_func(char *s, stack_t **stack, unsigned int line_number)
 	};
 	unsigned int i = 0;
 
+	if (strncmp(s, "#", 1) == 0)
+	{
+		return;
+	}
+
 	while (ops[i].opcode != NULL)
 	{
 		if (strcmp(s, ops[i].opcode) == 0)
