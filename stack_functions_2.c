@@ -59,6 +59,12 @@ void sub(stack_t **stack, unsigned int line_number)
 	free(copy);
 }
 
+/**
+ * _div - divides the second and top element of the stack
+ * @stack: Pointer to top of the stack
+ * @line_number: Instruction line number
+ * Return: void
+ */
 void _div(stack_t **stack, unsigned int line_number)
 {
 	stack_t *copy = NULL;
@@ -85,6 +91,12 @@ void _div(stack_t **stack, unsigned int line_number)
 	free(copy);
 }
 
+/**
+ * mul - multiplies the second and top element of the stack
+ * @stack: Pointer to top of the stack
+ * @line_number: Instruction line number
+ * Return: void
+ */
 void mul(stack_t **stack, unsigned int line_number)
 {
 	stack_t *copy = NULL;

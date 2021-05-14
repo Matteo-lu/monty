@@ -62,6 +62,7 @@ void get_func(char *s, stack_t **stack, unsigned int line_number)
 		{"sub", sub},
 		{"div", _div},
 		{"mul", mul},
+		{"mod", mod},
 		{NULL, NULL}
 	};
 	unsigned int i = 0;
