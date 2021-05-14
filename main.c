@@ -11,7 +11,7 @@ int _value;
 int main(int ac, char **av)
 {
 	char *buffer = NULL, **token = NULL;
-	unsigned int number_lines = 1;
+	unsigned int number_lines = 0, i = 0;
 	stack_t *stack = NULL;
 	size_t size  = 0;
 	FILE *fp = fopen(av[1], "r");
@@ -24,23 +24,28 @@ int main(int ac, char **av)
 	if (ac != 2)
 	{
 		dprintf(STDERR_FILENO, "USAGE: monty file\n");
+		fclose(fp);
 		exit(EXIT_FAILURE);
 	}
 	while (-1 != getline(&buffer, &size, fp))
 	{
+		while (buffer[i])
+		{
+			if (buffer[i] == '\n')
+				buffer[i] = '\0';
+			i++;
+		}
 		number_lines++;
 		token = buff_separator(buffer, " ");
 		if (execute_loop(token, number_lines, &stack) == -1)
 		{
 			dprintf(STDERR_FILENO, "L%d: usage: push integer\n", number_lines);
-			free_everything(buffer, &stack, token);
+			free_everything(buffer, &stack);
+			fclose(fp);
 			exit(EXIT_FAILURE);
 		}
 	}
-	buffer = NULL;
-	/*free_everything(buffer, &stack, token);*/
-	free(buffer);
-	free_stack(&stack);
+	free_everything(buffer, &stack);
 	fclose(fp);
 	return (0);
 }
@@ -63,12 +68,16 @@ number_lines, stack_t **stack)
 	}
 	if (j == 2)
 	{
-		_value = atoi(array_lines[1]);
-		if (_value == 0 && strcmp(array_lines[1], "0") != 0)
+		if (strcmp(array_lines[0], "pall") != 0)
 		{
-			free(array_lines);
-			return (-1);
+			_value = atoi(array_lines[1]);
+			if (_value == 0 && strcmp(array_lines[1], "0") != 0)
+			{
+				free(array_lines);
+				return (-1);
+			}
 		}
+
 	}
 	if (j != 0)
 	{
@@ -80,14 +89,12 @@ number_lines, stack_t **stack)
 
 /**
  * free_everything - function to free memory
- * @array_lines: pointer to arguments
  * @buffer: buffer
  * @stack: pointer to top
  * Return: void
  */
-void free_everything(char *buffer, stack_t **stack, char **array_lines)
+void free_everything(char *buffer, stack_t **stack)
 {
 	free_stack(stack);
 	free(buffer);
-	free(array_lines);
 }

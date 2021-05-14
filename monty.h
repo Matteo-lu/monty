@@ -48,7 +48,7 @@ void free_stack(stack_t **stack);
 char *_read(char **av);
 int execute_loop(char **array_lines, unsigned int number_lines,
 stack_t **stack);
-void free_everything(char *buffer, stack_t **stack, char **array_lines);
+void free_everything(char *buffer, stack_t **stack);
 void add(stack_t **stack, unsigned int line_number);
 void nop(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);

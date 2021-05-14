@@ -63,7 +63,7 @@ int get_func(char *s, stack_t **stack, unsigned int line_number)
 
 	while (ops[i].opcode != NULL)
 	{
-		if (strncmp(s, ops[i].opcode, strlen(ops[i].opcode)) == 0)
+		if (strcmp(s, ops[i].opcode) == 0)
 		{
 			j++;
 			ops[i].f(stack, line_number);
