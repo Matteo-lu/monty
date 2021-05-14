@@ -79,7 +79,7 @@ void _div(stack_t **stack, unsigned int line_number)
 		dprintf(STDERR_FILENO, "L%d: division by zero\n", line_number);
 		exit(EXIT_FAILURE);
 	}
-	copy->next->n = (*stack)->n / copy->next->n;
+	copy->next->n = copy->next->n / (*stack)->n;
 	*stack = copy->next;
 	(*stack)->prev = NULL;
 	free(copy);
