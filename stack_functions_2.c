@@ -44,13 +44,13 @@ void sub(stack_t **stack, unsigned int line_number)
 
 	if (*stack == NULL)
 	{
-		dprintf(STDERR_FILENO, "L%d: can't add, stack too short\n", line_number);
+		dprintf(STDERR_FILENO, "L%d: can't sub, stack too short\n", line_number);
 		exit(EXIT_FAILURE);
 	}
 	copy = *stack;
 	if (copy->next == NULL)
 	{
-		dprintf(STDERR_FILENO, "L%d: can't add, stack too short\n", line_number);
+		dprintf(STDERR_FILENO, "L%d: can't sub, stack too short\n", line_number);
 		exit(EXIT_FAILURE);
 	}
 	copy->next->n -= (*stack)->n;
