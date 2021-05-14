@@ -51,8 +51,12 @@ int get_func(char *s, stack_t **stack, unsigned int line_number)
 {
 	instruction_t ops[] = {
 		{"push", push},
-		/*{"pop", pop},*/
+		{"pop", pop},
 		{"pall", pall},
+		{"pint", pint},
+		{"swap", swap},
+		{"nop", nop},
+		{"add", add},
 		{NULL, NULL}
 	};
 	unsigned int i = 0, j = 0;
