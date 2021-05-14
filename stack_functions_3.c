@@ -62,3 +62,35 @@ void pchar(stack_t **stack, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 }
+
+/**
+ * pstr -prints the string starting at the top of the stack.
+ * @stack: Pointer to top of the stack
+ * @line_number: Instruction line number
+ * Return: void
+ */
+void pstr(stack_t **stack, unsigned int line_number __attribute__((unused)))
+{
+	stack_t *copy = NULL;
+	int count = 0;
+
+	if (*stack == NULL)
+	{
+		putchar('\n');
+	}
+	copy = *stack;
+	while (copy != NULL)
+	{
+		count = copy->n;
+		if (count >= 1 && count <= 126)
+		{
+			putchar(count);
+		}
+		else
+		{
+			break;
+		}
+		copy = copy->next;
+	}
+	putchar('\n');
+}
