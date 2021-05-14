@@ -72,7 +72,7 @@ void get_func(char *s, stack_t **stack, unsigned int line_number)
 		}
 		i++;
 	}
-	dprintf(stderr, "L%d: unknown instruction %s\n", line_number, s);
+	dprintf(STDERR_FILENO, "L%d: unknown instruction %s\n", line_number, s);
 	free_stack(stack);
 	exit(EXIT_FAILURE);
 
