@@ -14,14 +14,14 @@ int main(int ac, char **av)
 	unsigned int number_lines = 0;
 	stack_t *stack = NULL;
 	size_t size  = 0;
-	FILE *fp = fopen(av[1], "r");
+	FILE *fp = NULL;
 
 	if (ac != 2)
 	{
 		dprintf(STDERR_FILENO, "USAGE: monty file\n");
-		fclose(fp);
 		exit(EXIT_FAILURE);
 	}
+	fp = fopen(av[1], "r");
 	if (!fp)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't open file %s\n", av[1]);
