@@ -60,29 +60,44 @@ int main(int ac, char **av)
 int execute_loop(char **array_lines, unsigned int
 number_lines, stack_t **stack)
 {
-	unsigned int j = 0;
+	unsigned int j = 0, i = 0, r = 0;
+	char k = 48;
 
 	while (array_lines[j] && j < 2)
-	{
 		j++;
-	}
 	if (j == 2)
 	{
 		if (strcmp(array_lines[0], "pall") != 0)
 		{
-			_value = atoi(array_lines[1]);
-			if (_value == 0 && strcmp(array_lines[1], "0") != 0)
+			while (array_lines[1][i] && array_lines[1][i] != '\n')
+			{
+				k = 48;
+				while (k >= 48 && k <= 56)
+				{
+					if (array_lines[1][i] == k)
+						r++;
+					k++;
+				}
+				i++;
+			}
+			if (r == i)
+			{
+				_value = atoi(array_lines[1]);
+				if (_value == 0 && strcmp(array_lines[1], "0") != 0)
+				{
+					free(array_lines);
+					return (-1);
+				}
+			}
+			else
 			{
 				free(array_lines);
 				return (-1);
 			}
 		}
-
 	}
 	if (j != 0)
-	{
 		get_func(array_lines[0], stack, number_lines);
-	}
 	free(array_lines);
 	return (0);
 }
