@@ -38,9 +38,9 @@ int main(int ac, char **av)
 		}
 	}
 	buffer = NULL;
-	free_everything(buffer, &stack, token);
+	/*free_everything(buffer, &stack, token);*/
 	free(buffer);
-	free(stack);
+	free_stack(&stack);
 	fclose(fp);
 	return (0);
 }
