@@ -27,6 +27,8 @@ char **buff_separator(char *str, char *identificator)
 		token = strtok(NULL, identificator);
 	}
 	free(ptr);
+	if (i == 0)
+		return (NULL);
 	array_words = malloc((i + 1) * sizeof(char *));
 	token = strtok(str, identificator);
 	i = 0;
@@ -47,7 +49,7 @@ char **buff_separator(char *str, char *identificator)
  * @line_number: current line
  * Return: void
  */
-int get_func(char *s, stack_t **stack, unsigned int line_number)
+void get_func(char *s, stack_t **stack, unsigned int line_number)
 {
 	instruction_t ops[] = {
 		{"push", push},
@@ -59,22 +61,22 @@ int get_func(char *s, stack_t **stack, unsigned int line_number)
 		{"add", add},
 		{NULL, NULL}
 	};
-	unsigned int i = 0, j = 0;
+	unsigned int i = 0;
 
 	while (ops[i].opcode != NULL)
 	{
 		if (strcmp(s, ops[i].opcode) == 0)
 		{
-			j++;
 			ops[i].f(stack, line_number);
+			return;
 		}
 		i++;
 	}
-	if (j == 0)
-	{
-		return (-1);
-	}
-	return (0);
+	dprintf(STDERR_FILENO, "L%d: unknown instruction %s", line_number, s);
+	free_stack(stack);
+	exit(EXIT_FAILURE);
+
+
 }
 
 /**

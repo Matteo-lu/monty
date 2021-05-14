@@ -16,7 +16,7 @@ int main(int ac, char **av)
 	size_t size  = 0;
 	FILE *fp = fopen(av[1], "r");
 
-		if (ac != 2)
+	if (ac != 2)
 	{
 		dprintf(STDERR_FILENO, "USAGE: monty file\n");
 		fclose(fp);
@@ -29,20 +29,17 @@ int main(int ac, char **av)
 	}
 	while (-1 != getline(&buffer, &size, fp))
 	{
-		while (buffer[i])
-		{
-			if (buffer[i] == '\n')
-				buffer[i] = '\0';
-			i++;
-		}
 		number_lines++;
-		token = buff_separator(buffer, " ");
-		if (execute_loop(token, number_lines, &stack) == -1)
+		token = buff_separator(buffer, "\t\n ");
+		if (token != NULL)
 		{
+			if (execute_loop(token, number_lines, &stack) == -1)
+			{
 			dprintf(STDERR_FILENO, "L%d: usage: push integer\n", number_lines);
 			free_everything(buffer, &stack);
 			fclose(fp);
 			exit(EXIT_FAILURE);
+			}
 		}
 	}
 	free_everything(buffer, &stack);
@@ -88,11 +85,6 @@ number_lines, stack_t **stack)
 			if (r == i)
 			{
 				_value = atoi(array_lines[1]);
-				if (_value == 0 && strcmp(array_lines[1], "0") != 0)
-				{
-					free(array_lines);
-					return (-1);
-				}
 			}
 			else
 			{
@@ -101,8 +93,7 @@ number_lines, stack_t **stack)
 			}
 		}
 	}
-	if (j != 0)
-		get_func(array_lines[0], stack, number_lines);
+	get_func(array_lines[0], stack, number_lines);
 	free(array_lines);
 	return (0);
 }
