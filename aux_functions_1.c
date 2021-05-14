@@ -60,6 +60,8 @@ void get_func(char *s, stack_t **stack, unsigned int line_number)
 		{"nop", nop},
 		{"add", add},
 		{"sub", sub},
+		{"div", _div},
+		{"mul", mul},
 		{NULL, NULL}
 	};
 	unsigned int i = 0;
@@ -76,8 +78,6 @@ void get_func(char *s, stack_t **stack, unsigned int line_number)
 	dprintf(STDERR_FILENO, "L%d: unknown instruction %s\n", line_number, s);
 	free_stack(stack);
 	exit(EXIT_FAILURE);
-
-
 }
 
 /**
