@@ -16,15 +16,15 @@ int main(int ac, char **av)
 	size_t size  = 0;
 	FILE *fp = fopen(av[1], "r");
 
-	if (!fp)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't open file %s\n", av[1]);
-		exit(EXIT_FAILURE);
-	}
-	if (ac != 2)
+		if (ac != 2)
 	{
 		dprintf(STDERR_FILENO, "USAGE: monty file\n");
 		fclose(fp);
+		exit(EXIT_FAILURE);
+	}
+	if (!fp)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't open file %s\n", av[1]);
 		exit(EXIT_FAILURE);
 	}
 	while (-1 != getline(&buffer, &size, fp))
@@ -67,11 +67,16 @@ number_lines, stack_t **stack)
 		j++;
 	if (j == 2)
 	{
-		if (strcmp(array_lines[0], "pall") != 0)
+		if (strcmp(array_lines[0], "push") == 0)
 		{
 			while (array_lines[1][i] && array_lines[1][i] != '\n')
 			{
 				k = 48;
+				if (array_lines[1][i] == '-')
+				{
+					i = 0;
+					r++;
+				}
 				while (k >= 48 && k <= 56)
 				{
 					if (array_lines[1][i] == k)
