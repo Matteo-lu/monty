@@ -74,23 +74,26 @@ void pstr(stack_t **stack, unsigned int line_number __attribute__((unused)))
 	stack_t *copy = NULL;
 	int count = 0;
 
-	if (*stack == NULL)
+	if (*stack != NULL)
+	{
+		copy = *stack;
+		while (copy != NULL)
+		{
+			count = copy->n;
+			if (count >= 1 && count <= 126)
+			{
+				putchar(count);
+			}
+			else
+			{
+				break;
+			}
+			copy = copy->next;
+		}
+		putchar('\n');
+	}
+	else
 	{
 		putchar('\n');
 	}
-	copy = *stack;
-	while (copy != NULL)
-	{
-		count = copy->n;
-		if (count >= 1 && count <= 126)
-		{
-			putchar(count);
-		}
-		else
-		{
-			break;
-		}
-		copy = copy->next;
-	}
-	putchar('\n');
 }
