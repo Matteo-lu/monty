@@ -66,6 +66,7 @@ void get_func(char *s, stack_t **stack, unsigned int line_number)
 		{"pchar", pchar},
 		{"pstr", pstr},
 		{"rotr", rotr},
+		{"rotl", rotl},
 		{NULL, NULL}
 	};
 	unsigned int i = 0;
