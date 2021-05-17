@@ -97,3 +97,49 @@ void pstr(stack_t **stack, unsigned int line_number __attribute__((unused)))
 		putchar('\n');
 	}
 }
+
+/**
+ * rotr - rotates the stack to the top.
+ * @stack: Pointer to top of the stack
+ * @line_number: Instruction line number
+ * Return: void
+ */
+void rotr(stack_t **stack, unsigned int line_number __attribute__((unused)))
+{
+	stack_t  *copy = NULL;
+
+	copy = *stack;
+
+	if (*stack != NULL && (*stack)->next != NULL)
+	{
+		if ((*stack)->next->next == NULL)
+		{
+		copy = copy->next;
+		(*stack)->prev = copy;
+		(*stack)->next = NULL;
+		copy->next = *stack;
+		copy->prev = NULL;
+		*stack = copy;
+		}
+		else
+		{
+		while (copy != NULL)
+		{
+			if ((*stack)->prev == NULL)
+			{
+				copy = copy->next;
+				(*stack)->prev = copy;
+				(*stack)->next = NULL;
+				*stack = copy;
+				copy = copy->next;
+				(*stack)->next = (*stack)->prev;
+			}
+			(*stack)->prev = copy;
+			*stack = copy;
+			copy = copy->next;
+			(*stack)->next = (*stack)->prev;
+			(*stack)->prev = copy;
+			}
+		}
+	}
+}
